@@ -1,8 +1,8 @@
 /* ===== Base Styles ===== */
 :root {
-    --primary-color: #1D3528;
-    --primary-light: #4e7c5a;
-    --secondary-color: #1D3527;
+    --primary-color: #191970;
+    --primary-light: #0000CD;
+    --secondary-color: #0E3386;
     --accent-color: #EAC84C;
     --accent-hover: #f6db6e;
     --text-color: #333333;
@@ -967,7 +967,7 @@ header.scrolled {
 
 /* ===== Footer ===== */
 footer {
-    background-color: var(--secondary-color);
+    background-color: var(--primary-color);
     color: var(--white);
     padding: 60px 0 20px;
 }
