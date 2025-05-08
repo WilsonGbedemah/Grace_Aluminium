@@ -31,76 +31,26 @@ const animateOnScroll = () => {
     });
 };
 
-// Set initial styles for animation
-window.addEventListener('DOMContentLoaded', () => {
-    const elements = document.querySelectorAll('.about-content, .services-grid, .products-grid, .testimonials, .location-content, .contact-content');
-    
-    elements.forEach(element => {
-        element.style.opacity = '0';
-        element.style.transform = 'translateY(50px)';
-        element.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
-    });
-});
+// Animate gallery images when in viewport
+const galleryGrid = document.querySelector('.gallery-grid');
 
-// Run animation check on scroll
-window.addEventListener('scroll', animateOnScroll);
-
-// Mobile menu functionality
-const mobileMenuCheckbox = document.getElementById('mobile-menu-checkbox');
-const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
-const mobileMenu = document.querySelector('.mobile-menu');
-const mobileMenuOverlay = document.querySelector('.mobile-menu-overlay');
-
-mobileMenuToggle.addEventListener('click', () => {
-    if (mobileMenuCheckbox.checked) {
-        mobileMenu.style.right = '-100%';
-        mobileMenuOverlay.style.display = 'none';
-    } else {
-        mobileMenu.style.right = '0';
-        mobileMenuOverlay.style.display = 'block';
-    }
-});
-
-mobileMenuOverlay.addEventListener('click', () => {
-    mobileMenuCheckbox.checked = false;
-    mobileMenu.style.right = '-100%';
-    mobileMenuOverlay.style.display = 'none';
-});
-
-// Smooth scrolling for anchor links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            window.scrollTo({
-                top: targetElement.offsetTop - 80,
-                behavior: 'smooth'
-            });
-            
-            // Close mobile menu if open
-            if (mobileMenuCheckbox.checked) {
-                mobileMenuCheckbox.checked = false;
-                mobileMenu.style.right = '-100%';
-                mobileMenuOverlay.style.display = 'none';
-            }
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+            // Optional: Unobserve after animation to improve performance
+            observer.unobserve(entry.target);
         }
     });
+}, { 
+    threshold: 0.1, // Trigger when 10% of element is visible
+    rootMargin: '0px 0px -50px 0px' // Adjust this to trigger animation sooner/later
 });
 
-// Header scroll effect
-window.addEventListener('scroll', () => {
-    const header = document.querySelector('header');
-    if (window.scrollY > 50) {
-        header.classList.add('scrolled');
-    } else {
-        header.classList.remove('scrolled');
-    }
-});
+if (galleryGrid) {
+    observer.observe(galleryGrid);
+}
+
 
 // Form submission
 document.getElementById('contactForm')?.addEventListener('submit', function(e) {
