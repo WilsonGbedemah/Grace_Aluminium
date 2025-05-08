@@ -1062,7 +1062,7 @@ footer {
     justify-content: center;
     color: white;
     transition: var(--transition);
-    animation: bounceStep 3s infinite;
+
 }
 
 .footer-social a:hover {
